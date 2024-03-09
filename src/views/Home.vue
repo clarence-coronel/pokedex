@@ -3,9 +3,11 @@
       <div v-for="poke, index in pokemons" :key="index" class="font-semibold text-xl">
         {{ poke.name }}
       </div>
-  
-      <button @click="() => fetchData(prev)">Prev</button>
-      <button @click="() => fetchData(link)">Next</button>
+      
+      <div class="flex gap-5">
+        <button class="hover:bg-neutral-200 duration-200 bg-white rounded-md p-2 text-red-400 font-bold w-40" @click="() => fetchData(prev)">Prev</button>
+        <button class="hover:bg-neutral-200 duration-200 bg-white rounded-md p-2 text-red-400 font-bold w-40" @click="() => fetchData(link)">Next</button>
+      </div>
     </div>
   </template>
   
