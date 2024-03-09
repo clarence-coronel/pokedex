@@ -2,25 +2,32 @@
     <div class="w-full h-screen flex justify-center items-center flex-col gap-10 bg-red-400 overflow-y-auto">
       <div class="w-full h-4/5 flex flex-col gap-3 justify-center items-center">
         <div v-for="poke, index in pokemons" :key="index" class="font-semibold text-xl">
-            {{ poke.name }}
+          {{ poke.name }}
         </div>
       </div>
       
       <div class="flex gap-5">
-        <button class="hover:bg-neutral-200 duration-200 bg-white rounded-md p-2 text-red-400 font-bold w-40" @click="() => fetchData(prev)">Prev</button>
-        <button class="hover:bg-neutral-200 duration-200 bg-white rounded-md p-2 text-red-400 font-bold w-40" @click="() => fetchData(link)">Next</button>
+        <button class="hover:bg-neutral-200 disabled:bg-red-200 duration-200 bg-white rounded-md p-2 text-red-400 font-bold w-40" @click="() => { fetchData(prev); counter-- }" :disabled="counter == 1 || isLoading">Prev</button>
+        <button class="hover:bg-neutral-200 disabled:bg-red-200 duration-200 bg-white rounded-md p-2 text-red-400 font-bold w-40" @click="() => { fetchData(link); counter++ }" :disabled="link == null || isLoading">Next</button>
       </div>
+  
+      <span>Page {{ counter }}</span>
     </div>
   </template>
   
   <script setup>
   import { onMounted, ref } from 'vue';
   
+  const counter = ref(1); // Initialize counter with 1
   const pokemons = ref([]);
   const link = ref('https://pokeapi.co/api/v2/pokemon');
   const prev = ref('https://pokeapi.co/api/v2/pokemon');
+
+  const isLoading = ref(true)
   
   async function fetchData(url) {
+    isLoading.value = true
+
     try {
       const res = await fetch(url);
   
@@ -29,12 +36,16 @@
       }
   
       const data = await res.json();
-      
+  
       pokemons.value = data.results;
-      
-      if(data.previous) prev.value = data.previous;
+  
+      if (data.previous && data.next) prev.value = data.previous;
       link.value = data.next;
 
+      isLoading.value = false
+
+      console.log(data)
+  
     } catch (error) {
       console.error(error);
     }
