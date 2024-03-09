@@ -1,7 +1,9 @@
 <template>
-    <div class="flex justify-center items-center flex-col gap-5 bg-red-400 h-screen overflow-y-auto">
-      <div v-for="poke, index in pokemons" :key="index" class="font-semibold text-xl">
-        {{ poke.name }}
+    <div class="w-full h-screen flex justify-center items-center flex-col gap-10 bg-red-400 overflow-y-auto">
+      <div class="w-full h-4/5 flex flex-col gap-3 justify-center items-center">
+        <div v-for="poke, index in pokemons" :key="index" class="font-semibold text-xl">
+            {{ poke.name }}
+        </div>
       </div>
       
       <div class="flex gap-5">
