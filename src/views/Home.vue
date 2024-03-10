@@ -11,8 +11,8 @@
     </div>
 
     <div class="flex flex-col-reverse w-full gap-3 sm:flex-row sm:gap-5 justify-center items-center">
-      <button class="hover:bg-red-500 disabled:bg-neutral-300 duration-200 bg-red-400 rounded-md p-2 text-white font-bold w-full max-w-40" @click="prevPage" :disabled="counter === 1 || isLoading">Prev</button>
-      <button class="hover:bg-red-500 disabled:bg-neutral-300 duration-200 bg-red-400 rounded-md p-2 text-white font-bold w-full max-w-40" @click="nextPage" :disabled="!nextExist || isLoading">Next</button>
+      <button class="hover:bg-green-400 disabled:bg-neutral-300 duration-200 bg-green-500 rounded-md p-2 text-white font-bold w-full max-w-40" @click="prevPage" :disabled="counter === 1 || isLoading">Prev</button>
+      <button class="hover:bg-green-400 disabled:bg-neutral-300 duration-200 bg-green-500 rounded-md p-2 text-white font-bold w-full max-w-40" @click="nextPage" :disabled="!nextExist || isLoading">Next</button>
     </div>
 
     <span class="text-sm font-medium">Page {{ counter }}</span>
