@@ -35,12 +35,21 @@ const prevPage = async() => {
   await getData(offset, limit)
 }
 const nextPage = async() => {
+  scrollToTop()
   counter.value++
   offset+=20
   await getData(offset, limit)
 }
+
 onMounted(async () => {
   await getData(offset, limit)
 });
+
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'auto'
+  });
+}
 
 </script>
