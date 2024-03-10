@@ -3,7 +3,7 @@
         <div class="w-full aspect-square flex items-center justify-center">
             <img class="w-full max-w-[150px] object-center object-cover" :src="pokemonData.sprites.front_default" :alt="`${pokemonData.name}'s default front`">
         </div>
-        <div class="text-center w-full h-1/5 flex justify-center items-center text-xl font-medium">
+        <div class="text-center w-full h-[10%]flex justify-center items-center text-xl font-medium">
             {{ pokemonData.name[0].toUpperCase() + pokemonData.name.substring(1)}}
         </div>
     </div>
