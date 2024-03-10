@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-auto max-w-[1600px]">
+  <div class="mx-auto max-w-[1400px]">
     <router-view/>
   </div>
   <MyFooter />

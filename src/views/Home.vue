@@ -26,7 +26,7 @@ import { usePokemonPreviewList } from '@/composables/usePokemonPreviewList'
 
 let counter = ref(1)
 let offset = 0
-let limit = 30
+let limit = 20
 const { pokemonList, nextExist, isLoading, getData } = usePokemonPreviewList()
 
 const prevPage = async() => {
