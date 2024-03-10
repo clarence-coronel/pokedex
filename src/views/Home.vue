@@ -6,7 +6,7 @@
       <span>Pokédex</span>
     </div>
 
-    <div class="w-full grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-10 p-10">
+    <div class="w-full grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-10 p-5">
       <Card v-if="pokemonList.length" v-for="poke, index in pokemonList" :key="poke.name" :name="poke.name" :dataUrl="poke.url" />
     </div>
 
