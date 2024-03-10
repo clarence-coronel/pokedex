@@ -7,6 +7,6 @@
 </template>
 
 <script setup>
-import MyFooter from '@/views/Footer'
+import MyFooter from '@/components/Footer'
 
 </script>
