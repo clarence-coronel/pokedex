@@ -19,7 +19,6 @@ export function usePokemonPreviewList (){
             const data = await res.json();
             pokemonList.value = data.results;
     
-    
             if(data.next) nextExist.value = true
             else nextExist.value = false
         } catch (error) {

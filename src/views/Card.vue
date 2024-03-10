@@ -1,0 +1,32 @@
+<template>
+    <div v-if="pokemonData" class="flex flex-col justify-start items-center aspect-square p-3 rounded-lg bg-white shadow-center-sm">
+        <div class="w-full aspect-square flex items-center justify-center">
+            <img class="w-full h-full object-center object-cover" :src="pokemonData.sprites.front_default" alt="">
+        </div>
+        <div class="w-full h-1/5 flex justify-center items-center text-xl font-medium">
+            {{ pokemonData.name }}
+        </div>
+    </div>
+</template>
+
+<script setup>
+import { useGetPokemonData } from '@/composables/useGetPokemonData';
+import { onMounted, ref } from 'vue';
+
+const { pokemonData, isLoading, getData } = useGetPokemonData()
+const imageUrl = ref()
+
+const props = defineProps({
+    name: {
+        type: String
+    },
+    dataUrl: {
+        type: String
+    },
+})
+
+onMounted(async() => {
+    await getData(props.dataUrl)
+    console.log(pokemonData.value)
+})
+</script>
