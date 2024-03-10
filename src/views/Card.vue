@@ -4,7 +4,7 @@
             <img class="w-full h-full object-center object-cover" :src="pokemonData.sprites.front_default" :alt="`${pokemonData.name}`">
         </div>
         <div class="w-full h-1/5 flex justify-center items-center text-xl font-medium">
-            {{ pokemonData.name }}
+            {{ pokemonData.name[0].toUpperCase() + pokemonData.name.substring(1)}}
         </div>
     </div>
 </template>
