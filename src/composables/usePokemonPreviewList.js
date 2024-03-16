@@ -5,8 +5,16 @@ export function usePokemonPreviewList (){
     const nextExist = ref(true)
     const isLoading = ref(false)
 
+    const delayFinished = ref(false)
+
+    setTimeout(()=>{
+        delayFinished.value = true
+    }, 100)
+
     const getData = async (offset, limit) => {
         isLoading.value = true
+
+        // await new Promise(resolve => setTimeout(resolve, 2000));
 
         try {
             const url = `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`;
@@ -28,5 +36,5 @@ export function usePokemonPreviewList (){
         }
     }
 
-    return { pokemonList, nextExist, isLoading, getData }
+    return { pokemonList, nextExist, isLoading, getData, delayFinished }
 }
