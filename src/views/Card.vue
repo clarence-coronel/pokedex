@@ -15,16 +15,15 @@
         </div>
     </router-link>
     <div v-else-if="delayFinished && isLoading" class="gap-3 animate-pulse aspect-square flex flex-col justify-center items-center p-5 rounded-lg bg-white shadow-center-sm">
-        <div class="w-full aspect-square bg-neutral-200 rounded-md flex items-center justify-center">
+        <div class="w-full h-40 bg-neutral-200 rounded-md flex items-center justify-center">
         </div>
 
-        <div class="w-full h-10 bg-neutral-200 rounded-md text-center flex justify-center items-center text-xl font-medium">
+        <div class="w-full h-7 bg-neutral-200 rounded-md text-center flex justify-center items-center text-xl font-medium">
         </div>
 
-        <div class="w-full h-fit flex flex-wrap gap-2 justify-center">
-            <span class="w-10 h-5 bg-neutral-200 px-2 py-1 text-white rounded-md"></span>
-            <span class="w-10 h-5 bg-neutral-200 px-2 py-1 text-white rounded-md"></span>
-            <span class="w-10 h-5 bg-neutral-200 px-2 py-1 text-white rounded-md"></span>
+        <div class="w-full h-fit flex flex-wrap gap-3 justify-center">
+            <span class="w-16 h-7 bg-neutral-200 px-2 py-1 text-white rounded-md"></span>
+            <span class="w-16 h-7 bg-neutral-200 px-2 py-1 text-white rounded-md"></span>
         </div>
     </div>
 </template>
@@ -75,5 +74,6 @@ const props = defineProps({
 
 onMounted(async() => {
     await getData(props.dataUrl)
+    console.log(pokemonData.value)
 })
 </script>
