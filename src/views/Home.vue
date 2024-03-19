@@ -7,7 +7,7 @@
       <img class="w-52" src="https://archives.bulbagarden.net/media/upload/4/4b/Pok%C3%A9dex_logo.png" alt="Pokedex Logo">
     </div>
 
-    <div v-if="!isLoading" class="w-full grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-10 p-5">
+    <div v-if="!isLoading" class="w-full min-h-[70vh] grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-10 p-5">
        <Card  v-for="poke in pokemonList" :key="poke.name" :name="poke.name" :dataUrl="poke.url" /> 
     </div>
     <div v-else-if="delayFinished && isLoading" class="w-full min-h-[70vh] flex flex-col justify-center items-center p-5 rounded-lg bg-white">
@@ -15,8 +15,8 @@
     </div>
 
     <div class="flex flex-col-reverse w-full gap-3 sm:flex-row sm:gap-5 justify-center items-center">
-      <button class="hover:bg-green-400 disabled:bg-neutral-300 duration-200 bg-green-500 rounded-md p-2 text-white font-bold w-full sm:max-w-40" @click="prevPage" :disabled="counter === 1 || isLoading">Previous</button>
-      <button class="hover:bg-green-400 disabled:bg-neutral-300 duration-200 bg-green-500 rounded-md p-2 text-white font-bold w-full sm:max-w-40" @click="nextPage" :disabled="!nextExist || isLoading">Next</button>
+      <button class="hover:bg-green-400 disabled:bg-neutral-300 duration-200 bg-green-500 rounded-md p-2 text-white font-bold w-full sm:max-w-40" @click="() => changePage(-1)" :disabled="counter <= 1 || isLoading">Previous</button>
+      <button class="hover:bg-green-400 disabled:bg-neutral-300 duration-200 bg-green-500 rounded-md p-2 text-white font-bold w-full sm:max-w-40" @click="() => changePage(1)" :disabled="!nextExist || isLoading">Next</button>
     </div>
 
     <span class="text-sm font-medium">Page {{ counter }}</span>
@@ -25,28 +25,36 @@
 
 <script setup>
 import Card from './Card.vue'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watchEffect } from 'vue'
 import { usePokemonPreviewList } from '@/composables/usePokemonPreviewList'
+import { useRoute, useRouter } from 'vue-router';
+
+const route = useRoute()
+const router = useRouter()
 
 let counter = ref(1)
-let offset = 0
+let offset = ref(1)
 let limit = 20
+
+watchEffect(() => {
+  counter.value = route.query.page
+
+  router.replace({
+    path: '/',
+    query: { page: Math.floor((offset.value / 20) + 1) }
+  })
+})
+
 const { pokemonList, nextExist, isLoading, getData, delayFinished } = usePokemonPreviewList()
 
-const prevPage = async() => {
-  counter.value--
-  offset-=20
-  await getData(offset, limit)
-}
-const nextPage = async() => {
-  scrollToTop()
-  counter.value++
-  offset+=20
-  await getData(offset, limit)
-}
-
 onMounted(async () => {
-  await getData(offset, limit)
+  if(!route.query.page || route.query.page < 1 || isNaN(route.query.page)) router.replace({
+    path: '/',
+    query: { page: offset.value }
+  })
+  else offset.value = (route.query.page-1) * 20
+
+  await getData(offset.value, limit)
 });
 
 function scrollToTop() {
@@ -54,6 +62,16 @@ function scrollToTop() {
     top: 0,
     behavior: 'auto'
   });
+}
+
+async function changePage(newVal) {
+  if(newVal > 0) scrollToTop()
+
+  counter.value = newVal > 0 ? counter.value++ : counter.value--
+
+  offset.value =  newVal > 0 ? offset.value+=20 : offset.value-=20
+
+  await getData(offset.value, limit)
 }
 
 </script>
