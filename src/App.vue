@@ -1,8 +1,10 @@
 <template>
-  <div class="mx-auto max-w-[1400px]">
-    <router-view/>
+  <div class="w-full min-h-screen flex flex-col items-center">
+    <div class="w-full max-w-[1400px]">
+      <router-view/>
+    </div>
+    <MyFooter />
   </div>
-  <MyFooter />
   
 </template>
 

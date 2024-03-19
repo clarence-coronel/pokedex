@@ -1,6 +1,6 @@
 <template>
-    <footer class="flex justify-center items-center p-2 bg-red-400 text-white">
-        <a href="https://github.com/Clarence-Coronel" target="_blank" class="flex flex-col-reverse gap-3 justify-center items-center group sm:flex-row">
+    <footer class="mt-auto flex justify-center items-center p-2 text-neutral-600 bg-white">
+        <a href="https://github.com/Clarence-Coronel" target="_blank" class="flex flex-col-reverse gap-1 sm:gap-3 justify-center items-center group sm:flex-row">
             <span class="font-semibold text-center">
                 Copyright &copy; 2024 Clarence Coronel
             </span>
