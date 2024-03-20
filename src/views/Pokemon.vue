@@ -48,7 +48,7 @@
         </div>
     </div>
 
-    <Evolution />
+    <Evolution :url="pokemonData.species.url" />
   </div>
 </template>
 
@@ -61,6 +61,7 @@ import { useGetEvolutionChain } from '@/composables/useGetEvolutionChain'
 import { useGetPokemonData } from '@/composables/useGetPokemonData'
 import { useGetTypeColors } from '@/composables/useGetTypeColors'
 
+
 const route = useRoute()
 const params = ref(route.params.id)
 const { getColorClass } = useGetTypeColors()
@@ -72,8 +73,6 @@ onMounted(async() => {
   await getData(`https://pokeapi.co/api/v2/pokemon/${params.value}`)
   
   await getChainData(pokemonData.value.species.url)
-
-  console.log(pokemonData.value)
 })
 
 </script>
