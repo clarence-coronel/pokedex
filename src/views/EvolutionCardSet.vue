@@ -1,6 +1,6 @@
 <template>
     <template v-for="pokemonData, i in pokemonDataSet" :key="i">
-        <div v-if="!isLoading && pokemonData" class="lg:hover:scale-110 min-w-48 md:aspect-[3/4] hover:cursor-pointer duration-200 gap-1 flex flex-col justify-start items-center p-5 rounded-lg bg-white shadow-center-sm">
+        <div v-if="!isLoading && pokemonData" class="lg:hover:scale-110 min-w-60 md:aspect-[3/4] hover:cursor-pointer duration-200 gap-1 flex flex-col justify-start items-center p-5 rounded-lg bg-white shadow-center-sm">
             <span class="text-neutral-400 font-semibold text-sm p-1 border rounded-full w-10 h-10 flex justify-center items-center">{{ index + 1 }}{{ getLetter(i).toUpperCase() }}</span>
             <div class="w-full flex items-center justify-center">
                 <img draggable="false" class="w-full max-w-[150px] aspect-square object-center object-cover" :src="pokemonData.sprites.front_default" :alt="`${pokemonData.name}'s default front`">
