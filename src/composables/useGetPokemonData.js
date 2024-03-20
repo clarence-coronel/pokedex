@@ -14,7 +14,7 @@ export function useGetPokemonData (){
         isLoading.value = true
 
         try {
-            // await new Promise(resolve => setTimeout(resolve, 3000));
+            // await new Promise(resolve => setTimeout(resolve, 2000));
 
             const res = await fetch(url);
         

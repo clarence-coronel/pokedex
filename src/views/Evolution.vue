@@ -17,7 +17,12 @@ import EvolutionCardSet from './EvolutionCardSet.vue'
 import { useGetEvolutionChain } from "@/composables/useGetEvolutionChain";
 
 const { evolutionChain, getData } = useGetEvolutionChain()
-const props = defineProps(['url'])
+const props = defineProps({
+    url: {
+        type: String,
+        default: null
+    }
+})
 const emit = defineEmits(['updatePokemonData']);
 
 onMounted(async () => {

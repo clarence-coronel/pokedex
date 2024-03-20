@@ -49,8 +49,33 @@
 
     <Evolution @updatePokemonData="handleClick" :url="pokemonData.species.url" />
   </div>
-  <div v-else>
-    Loading...
+  <div v-else-if="delayFinished" class="flex flex-col gap-5">
+    <div class="w-full max-w-[900px] mx-auto text-neutral-600 flex gap-5 flex-col items-center p-5 md:flex-row md:items-start md:gap-16 md:pt-10 md:pb-5 md:px-10">
+        <div class="animate-pulse bg-neutral-200 w-64 md:w-[40rem] aspect-square rounded-lg flex items-center justify-center ">    
+        </div>
+
+        <div class="w-full flex flex-col items-center gap-5 md:gap-10 max-w-[30rem]">
+          <h1 class="flex flex-col font-medium w-full text-center md:flex-row md:items-end md:justify-center md:gap-3">
+            <div class="w-full h-20 animate-pulse rounded-md bg-neutral-200">
+
+            </div>
+          </h1>
+
+          <div class="w-full flex flex-col gap-5">
+            <div class="bg-neutral-200 animate-pulse w-full h-7 rounded-md"></div>
+            <div class="bg-neutral-200 animate-pulse w-full h-7 rounded-md"></div>
+            <div class="bg-neutral-200 animate-pulse w-full h-7 rounded-md"></div>
+          </div>
+
+          <div class="w-full flex flex-col gap-5 md:grid md:grid-cols-2 md:gap-5  ">
+              <div class="rounded-md animate-pulse bg-neutral-200 w-full h-20"></div>
+              <div class="rounded-md animate-pulse bg-neutral-200 w-full h-20"></div>
+              <div class="rounded-md animate-pulse bg-neutral-200 w-full h-20"></div>
+              <div class="rounded-md animate-pulse bg-neutral-200 w-full h-20"></div>
+          </div>
+        </div>
+    </div>
+    <div class="bg-neutral-200 rounded-md w-full aspect-[4/1] animate-pulse"></div>
   </div>
 </template>
 
@@ -80,12 +105,20 @@ onMounted(async() => {
 })
 
 async function handleClick(name){
+  scrollToTop()
+
   await getData(`https://pokeapi.co/api/v2/pokemon/${name}`)
 
   router.replace({
     path: `/pokemon/${pokemonData.value.id}`
   })
+}
 
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'auto'
+  });
 }
 </script>
 
