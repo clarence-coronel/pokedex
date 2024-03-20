@@ -3,6 +3,7 @@ import { ref } from "vue";
 export function useGetEvolutionChain(){
     
     const evolutionChain = ref([])
+    const delayFinished = ref(false)
 
     const getData = async(url) => {
         try {
