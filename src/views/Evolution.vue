@@ -7,7 +7,7 @@
                 <EvolutionCardSet @updatePokemonData="handleClick" v-else  :set="evolution" :index="index" />
             </template>
         </div>
-        <div v-else class="w-full flex justify-center items-center animate-pulse">
+        <div v-else class="w-full flex justify-center items-center animate-pulse min-h-40">
             Loading...
         </div>
     </div>
