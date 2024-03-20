@@ -1,6 +1,5 @@
 <template>
   <div v-if="!isLoading && pokemonData" class="flex flex-col gap-5">
-
     <div class="w-full max-w-[900px] mx-auto text-neutral-600 flex gap-5 flex-col items-center p-5 md:flex-row md:items-start md:gap-16 md:pt-10 md:pb-5 md:px-10">
         <div class="shadow-center-sm w-64 md:w-[40rem] aspect-square rounded-lg flex items-center justify-center ">    
           <img class="w-full max-w-56" :src="pokemonData.sprites.front_default" alt="">
@@ -48,7 +47,10 @@
         </div>
     </div>
 
-    <Evolution :url="pokemonData.species.url" />
+    <Evolution @updatePokemonData="handleClick" :url="pokemonData.species.url" />
+  </div>
+  <div v-else>
+    Loading...
   </div>
 </template>
 
@@ -57,12 +59,14 @@ import Stat from '@/components/Stat.vue'
 import Evolution from './Evolution.vue'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { useGetEvolutionChain } from '@/composables/useGetEvolutionChain'
 import { useGetPokemonData } from '@/composables/useGetPokemonData'
 import { useGetTypeColors } from '@/composables/useGetTypeColors'
 
 
 const route = useRoute()
+const router = useRouter()
 const params = ref(route.params.id)
 const { getColorClass } = useGetTypeColors()
 
@@ -75,6 +79,14 @@ onMounted(async() => {
   await getChainData(pokemonData.value.species.url)
 })
 
+async function handleClick(name){
+  await getData(`https://pokeapi.co/api/v2/pokemon/${name}`)
+
+  router.replace({
+    path: `/pokemon/${pokemonData.value.id}`
+  })
+
+}
 </script>
 
 <style>

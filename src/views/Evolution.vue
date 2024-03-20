@@ -3,8 +3,8 @@
         <div class="font-medium">EVOLUTION CHAIN:</div>
         <div v-if="evolutionChain.length > 0" class="w-full h-fit flex flex-col p-10 gap-10 md:flex-row md:flex-wrap md:justify-center md:items-center">
             <template v-for="evolution,index in evolutionChain" :key="index">
-                <EvolutionCard v-if="typeof evolution == 'string'"  :name="evolution" :index="index" />
-                <EvolutionCardSet v-else  :set="evolution" :index="index" />
+                <EvolutionCard @updatePokemonData="handleClick" v-if="typeof evolution == 'string'"  :name="evolution" :index="index" />
+                <EvolutionCardSet @updatePokemonData="handleClick" v-else  :set="evolution" :index="index" />
             </template>
         </div>
     </div>
@@ -17,10 +17,14 @@ import EvolutionCardSet from './EvolutionCardSet.vue'
 import { useGetEvolutionChain } from "@/composables/useGetEvolutionChain";
 
 const { evolutionChain, getData } = useGetEvolutionChain()
-
 const props = defineProps(['url'])
+const emit = defineEmits(['updatePokemonData']);
 
 onMounted(async () => {
     await getData(props.url)
 })
+
+function handleClick(name) {
+  emit('updatePokemonData', name);
+}
 </script>
