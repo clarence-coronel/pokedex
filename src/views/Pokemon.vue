@@ -1,6 +1,6 @@
 <template>
   <div v-if="!isLoading && pokemonData" class="flex flex-col gap-5">
-    <div class="w-full max-w-[900px] mx-auto text-neutral-600 flex gap-5 flex-col items-center p-5 md:flex-row md:items-start md:gap-16 md:pt-10 md:pb-5 md:px-10">
+    <div class="w-full max-w-[1000px] mx-auto text-neutral-600 flex gap-5 flex-col items-center p-5 md:flex-row md:items-start md:gap-16 md:pt-10 md:pb-5 md:px-10">
         <div class="shadow-center-sm w-64 md:w-[40rem] aspect-square rounded-lg flex items-center justify-center ">    
           <img class="w-full max-w-56" :src="pokemonData.sprites.front_default" alt="">
         </div>
