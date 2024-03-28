@@ -1,7 +1,7 @@
 <template>
     <div class="px-5 max-w-[1400px] z-50 backdrop-blur-md sticky top-0 w-full border-b py-5 text-3xl font-bold flex flex-nowrap gap-5 justify-around items-center sm:justify-between sm:flex-row flex-col">
         <router-link class="" to="/">
-            <img class="w-32" src="https://archives.bulbagarden.net/media/upload/4/4b/Pok%C3%A9dex_logo.png" alt="Pokedex Logo">
+            <img class="w-32" src="./../assets/logo.png" alt="Pokedex Logo">
         </router-link>
 
         <form @submit.prevent="redirect" class="w-full sm:w-fit bg-white border h-10 border-neutral-300 rounded-lg flex flex-nowrap gap-1 items-center justify-between">
