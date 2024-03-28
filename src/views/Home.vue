@@ -1,12 +1,12 @@
 <template>
   <div class="max-w-[1400px] w-full min-h-screen flex justify-start items-center flex-col gap-5 p-5">
-    <div class="w-full px-5 flex justify-end gap-20">
+    <div class="w-full sm:px-5 flex justify-end gap-20">
       <!-- <span>Counter/Page: {{ counter }}</span>
       <span>Offset: {{ offset }}</span>
       <span>limit: {{ limit }}</span> -->
       <CustomSelect class="w-full sm:w-fit" @valueUpdated="valueUpdatedHandler" :selectedPropVal="limit" :selectedPropKey="limit" :options="options" />
     </div>
-    <div v-if="!isLoading" class="w-full min-h-[70vh] grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-10 p-5">
+    <div v-if="!isLoading" class="w-full min-h-[70vh] grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-10 sm:p-5">
        <Card  v-for="poke in pokemonList" :key="poke.name" :name="poke.name" :dataUrl="poke.url" /> 
     </div>
     <div v-else-if="delayFinished && isLoading" class="w-full min-h-[70vh] flex flex-col justify-center items-center p-5 rounded-lg bg-white">
@@ -79,8 +79,7 @@ onMounted(async () => {
     // alert('limit val changed')
     offset.value = (Number(route.query.page) * Number(route.query.limit)) - limit.value
   }  
-  
-  
+
   counter.value = Number(route.query.page)
 
   await getData(offset.value , limit.value)

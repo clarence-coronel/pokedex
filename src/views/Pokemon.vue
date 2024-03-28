@@ -1,7 +1,7 @@
 <template>
   <div v-if="!isLoading && pokemonData" class="flex flex-col gap-5">
-    <div class="w-full max-w-[1000px] mx-auto text-neutral-600 flex gap-5 flex-col items-center p-5 md:flex-row md:items-start md:gap-16 md:pt-10 md:pb-5 md:px-10">
-        <div class="shadow-center-sm w-64 md:w-[40rem] aspect-square rounded-lg flex items-center justify-center ">    
+    <div class="w-full max-w-[900px] mx-auto text-neutral-600 flex gap-5 flex-col items-center p-5 md:flex-row md:items-start md:gap-16 md:pt-10 md:pb-5 md:px-10">
+        <div class="shadow-center-sm w-96 aspect-square rounded-lg flex items-center justify-center ">    
           <img class="w-full max-w-56" :src="pokemonData.sprites.front_default" alt="">
         </div>
 
@@ -50,8 +50,8 @@
     <Evolution @updatePokemonData="handleClick" :url="pokemonData.species.url" />
   </div>
   <div v-else-if="delayFinished && isLoading" class="flex flex-col gap-5">
-    <div class="w-full max-w-[1000px] mx-auto text-neutral-600 flex gap-5 flex-col items-center p-5 md:flex-row md:items-start md:gap-16 md:pt-10 md:pb-5 md:px-10">
-        <div class="animate-pulse bg-neutral-200 w-64 md:w-[40rem] aspect-square rounded-lg flex items-center justify-center ">    
+    <div class="w-full max-w-[900px] mx-auto text-neutral-600 flex gap-5 flex-col items-center p-5 md:flex-row md:items-start md:gap-16 md:pt-10 md:pb-5 md:px-10">
+        <div class="animate-pulse bg-neutral-200 w-96 md:w-[40rem] aspect-square rounded-lg flex items-center justify-center ">    
         </div>
 
         <div class="w-full flex flex-col items-center gap-5 md:gap-10 max-w-[30rem]">
@@ -122,6 +122,8 @@ onMounted(async() => {
 
 async function handleClick(name){
   scrollToTop()
+
+  isLoading.value = true
 
   await getData(`https://pokeapi.co/api/v2/pokemon/${name}`)
 
