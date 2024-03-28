@@ -1,5 +1,11 @@
 <template>
   <div class="max-w-[1400px] w-full min-h-screen flex justify-start items-center flex-col gap-5 p-5">
+    <div class="w-full px-5 flex justify-end gap-20">
+      <!-- <span>Counter/Page: {{ counter }}</span>
+      <span>Offset: {{ offset }}</span>
+      <span>limit: {{ limit }}</span> -->
+      <CustomSelect class="w-full sm:w-fit" @valueUpdated="valueUpdatedHandler" :selectedPropVal="limit" :selectedPropKey="limit" :options="options" />
+    </div>
     <div v-if="!isLoading" class="w-full min-h-[70vh] grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-10 p-5">
        <Card  v-for="poke in pokemonList" :key="poke.name" :name="poke.name" :dataUrl="poke.url" /> 
     </div>
@@ -18,53 +24,97 @@
 
 <script setup>
 import Card from './Card.vue'
-import { onMounted, ref, watchEffect } from 'vue'
+import CustomSelect from '@/components/CustomSelect'
+import { onMounted, ref, watch, watchEffect } from 'vue'
 import { usePokemonPreviewList } from '@/composables/usePokemonPreviewList'
 import { useRoute, useRouter } from 'vue-router';
 
+const options = {
+  "20": 20,
+  "40": 40,
+  "60": 60,
+  "80": 80,
+  "100": 100,
+}
 
 const route = useRoute()
 const router = useRouter()
 
 let counter = ref(1)
-let offset = ref(1)
-let limit = 20
-
-watchEffect(() => {
-  counter.value = route.query.page
-
-  router.replace({
-    path: '/',
-    query: { page: Math.floor((offset.value / 20) + 1) }
-  })
-})
+let offset = ref(0)
+let limit = ref(20)
 
 const { pokemonList, nextExist, isLoading, getData, delayFinished } = usePokemonPreviewList()
 
-onMounted(async () => {
-  if(!route.query.page || route.query.page < 1 || isNaN(route.query.page)) router.replace({
+watchEffect(() => {
+  router.replace({
     path: '/',
-    query: { page: offset.value }
+    query: { page: counter.value, limit: limit.value }
   })
-  else offset.value = (route.query.page-1) * 20
+})
 
-  await getData(offset.value, limit)
+// watch(limit, async () => {
+//   offset.value = 1
+//   counter.value = 1
+
+//   await getData(offset.value, limit.value)
+// })
+
+// Problem is lagi to tinatawag kahit di naman need
+// watch(limit, async (newVal, oldVal) => {
+//   offset.value = 1
+//   counter.value = 1
+//   getData(offset.value, newVal);
+// });
+
+onMounted(async () => {
+  if(!route.query.page || route.query.page < 1 || isNaN(route.query.page) ){
+    router.replace({
+      path: '/',
+      query: { page: 1, limit: 20 }
+    })
+  }
+  else{
+    limit.value = Number(route.query.limit)
+    // alert('limit val changed')
+    offset.value = (Number(route.query.page) * Number(route.query.limit)) - limit.value
+  }  
+  
+  
+  counter.value = Number(route.query.page)
+
+  await getData(offset.value , limit.value)
 });
 
-function scrollToTop() {
+const scrollToTop = () => {
   window.scrollTo({
     top: 0,
     behavior: 'auto'
   });
 }
 
+const valueUpdatedHandler = async (newVal) => {
+  if(newVal == limit.value) return
+  limit.value = newVal
+  offset.value = 0
+  counter.value = 1
+
+  router.replace({
+    path: '/',
+    query: { page: counter.value, limit: limit.value }
+  })
+
+  await getData(offset.value, limit.value)
+}
+
 async function changePage(newVal) {
+  
   if(newVal > 0) scrollToTop()
+  
+  counter.value = newVal > 0 ? ++counter.value : --counter.value
 
-  counter.value = newVal > 0 ? counter.value++ : counter.value--
+  offset.value =  newVal > 0 ? offset.value+=limit.value : offset.value-=limit.value
 
-  offset.value =  newVal > 0 ? offset.value+=20 : offset.value-=20
-
-  await getData(offset.value, limit)
+  await getData(offset.value, limit.value)
 }
 </script>
