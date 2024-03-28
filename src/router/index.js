@@ -12,7 +12,7 @@ const routes = [
     path: '/pokemon/:id',
     name: 'pokemon',
     component: Pokemon
-  },
+  }
 ]
 
 const router = createRouter({

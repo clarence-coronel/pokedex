@@ -49,7 +49,7 @@
 
     <Evolution @updatePokemonData="handleClick" :url="pokemonData.species.url" />
   </div>
-  <div v-else-if="delayFinished" class="flex flex-col gap-5">
+  <div v-else-if="delayFinished && isLoading" class="flex flex-col gap-5">
     <div class="w-full max-w-[900px] mx-auto text-neutral-600 flex gap-5 flex-col items-center p-5 md:flex-row md:items-start md:gap-16 md:pt-10 md:pb-5 md:px-10">
         <div class="animate-pulse bg-neutral-200 w-64 md:w-[40rem] aspect-square rounded-lg flex items-center justify-center ">    
         </div>
@@ -77,17 +77,19 @@
     </div>
     <div class="bg-neutral-200 rounded-md w-full aspect-[4/1] animate-pulse"></div>
   </div>
+  <PokemonNotFound v-else-if="delayFinished && !isLoading && !pokemonData" />
 </template>
 
 <script setup>
 import Stat from '@/components/Stat.vue'
 import Evolution from './Evolution.vue'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useRouter } from 'vue-router'
 import { useGetEvolutionChain } from '@/composables/useGetEvolutionChain'
 import { useGetPokemonData } from '@/composables/useGetPokemonData'
 import { useGetTypeColors } from '@/composables/useGetTypeColors'
+import PokemonNotFound from '@/views/PokemonNotFound.vue'
 
 
 const route = useRoute()
@@ -98,10 +100,25 @@ const { getColorClass } = useGetTypeColors()
 const { getData: getChainData, evolutionChain } = useGetEvolutionChain()
 const { pokemonData, isLoading, getData,  delayFinished } = useGetPokemonData()
 
+watch(() => route.params.id, async () => {
+  // react to route changes...
+  pokemonData.value = null
+  isLoading.value = true
+  delayFinished.value = false
+
+  setTimeout(() => {
+    delayFinished.value = true
+  }, 100)
+
+  await getData(`https://pokeapi.co/api/v2/pokemon/${route.params.id}`)
+  
+  if(pokemonData.value) await getChainData(pokemonData.value.species.url)
+})
+
 onMounted(async() => {
   await getData(`https://pokeapi.co/api/v2/pokemon/${params.value}`)
   
-  await getChainData(pokemonData.value.species.url)
+  if(pokemonData.value) await getChainData(pokemonData.value.species.url)
 })
 
 async function handleClick(name){

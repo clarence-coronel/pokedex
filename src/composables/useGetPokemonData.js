@@ -1,9 +1,8 @@
 import { ref } from "vue";
 
-
 export function useGetPokemonData (){
     const pokemonData = ref(null)
-    const isLoading = ref(false)
+    const isLoading = ref(true)
     const delayFinished = ref(false)
 
     setTimeout(()=>{
@@ -11,7 +10,6 @@ export function useGetPokemonData (){
     }, 100)
 
     const getData = async (url) => {
-        isLoading.value = true
 
         try {
             // await new Promise(resolve => setTimeout(resolve, 2000));

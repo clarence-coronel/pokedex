@@ -8,9 +8,14 @@
 
 @layer components {
     .evolution{
-        display: grid;
+        /* display: grid;
         grid-template-columns: repeat( auto-fit, minmax(200px, 1fr) );
         gap: 5rem;
         padding: 2.5rem;
+         */
+
+         display: flex;
+         justify-content: center;
+         align-items: center;
     }
 }
