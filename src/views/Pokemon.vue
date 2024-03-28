@@ -50,7 +50,7 @@
     <Evolution @updatePokemonData="handleClick" :url="pokemonData.species.url" />
   </div>
   <div v-else-if="delayFinished && isLoading" class="flex flex-col gap-5">
-    <div class="w-full max-w-[900px] mx-auto text-neutral-600 flex gap-5 flex-col items-center p-5 md:flex-row md:items-start md:gap-16 md:pt-10 md:pb-5 md:px-10">
+    <div class="w-full max-w-[1000px] mx-auto text-neutral-600 flex gap-5 flex-col items-center p-5 md:flex-row md:items-start md:gap-16 md:pt-10 md:pb-5 md:px-10">
         <div class="animate-pulse bg-neutral-200 w-64 md:w-[40rem] aspect-square rounded-lg flex items-center justify-center ">    
         </div>
 
@@ -101,7 +101,6 @@ const { getData: getChainData, evolutionChain } = useGetEvolutionChain()
 const { pokemonData, isLoading, getData,  delayFinished } = useGetPokemonData()
 
 watch(() => route.params.id, async () => {
-  // react to route changes...
   pokemonData.value = null
   isLoading.value = true
   delayFinished.value = false
