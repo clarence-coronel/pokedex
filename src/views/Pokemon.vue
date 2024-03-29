@@ -49,9 +49,9 @@
 
     <Evolution @updatePokemonData="handleClick" :url="pokemonData.species.url" />
   </div>
-  <div v-else-if="delayFinished && isLoading" class="flex flex-col gap-5">
+  <div v-else-if="delayFinished && isLoading" class="w-full max-w-[900px] flex flex-col gap-5">
     <div class="w-full max-w-[900px] mx-auto text-neutral-600 flex gap-5 flex-col items-center p-5 md:flex-row md:items-start md:gap-16 md:pt-10 md:pb-5 md:px-10">
-        <div class="animate-pulse bg-neutral-200 w-96 md:w-[40rem] aspect-square rounded-lg flex items-center justify-center ">    
+        <div class="animate-pulse bg-neutral-200 w-full md:w-[40rem] aspect-square rounded-lg flex items-center justify-center ">    
         </div>
 
         <div class="w-full flex flex-col items-center gap-5 md:gap-10 max-w-[30rem]">
@@ -75,7 +75,9 @@
           </div>
         </div>
     </div>
-    <div class="bg-neutral-200 rounded-md w-full aspect-[4/1] animate-pulse"></div>
+    <div class="w-full h-64 aspect-[4/1] animate-pulse p-5">
+      <div class="bg-neutral-200 rounded-md w-full h-full"></div>
+    </div>
   </div>
   <PokemonNotFound v-else-if="delayFinished && !isLoading && !pokemonData" />
 </template>
