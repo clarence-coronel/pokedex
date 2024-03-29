@@ -46,43 +46,25 @@ let limit = ref(20)
 
 const { pokemonList, nextExist, isLoading, getData, delayFinished } = usePokemonPreviewList()
 
-watchEffect(() => {
+watch(counter, () => {
   router.replace({
     path: '/',
-    query: { page: counter.value, limit: limit.value }
+    query: { page: counter.value, limit: route.query.limit }
   })
 })
 
-// watch(limit, async () => {
-//   offset.value = 1
-//   counter.value = 1
-
-//   await getData(offset.value, limit.value)
-// })
-
-// Problem is lagi to tinatawag kahit di naman need
-// watch(limit, async (newVal, oldVal) => {
-//   offset.value = 1
-//   counter.value = 1
-//   getData(offset.value, newVal);
-// });
-
 onMounted(async () => {
-  if(!route.query.page || route.query.page < 1 || isNaN(route.query.page) ){
-    router.replace({
-      path: '/',
-      query: { page: 1, limit: 20 }
-    })
-  }
-  else{
+    if(!route.query.page || route.query.page < 1 || isNaN(route.query.page) || isNaN(route.query.limit) || route.query.limit < 1 || !route.query.limit){
+      router.replace({
+        path: '/',
+        query: { page: 1, limit: 20 }
+      })
+    }
+    
     limit.value = Number(route.query.limit)
-    // alert('limit val changed')
     offset.value = (Number(route.query.page) * Number(route.query.limit)) - limit.value
-  }  
 
-  counter.value = Number(route.query.page)
-
-  await getData(offset.value , limit.value)
+    await getData(offset.value , limit.value)
 });
 
 const scrollToTop = () => {
