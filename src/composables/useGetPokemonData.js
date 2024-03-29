@@ -12,7 +12,7 @@ export function useGetPokemonData (){
     const getData = async (url) => {
 
         try {
-            // await new Promise(resolve => setTimeout(resolve, 2000));
+            await new Promise(resolve => setTimeout(resolve, 2000));
 
             const res = await fetch(url);
         
