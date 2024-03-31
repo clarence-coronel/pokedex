@@ -20,6 +20,9 @@ export function useGetPokemonData() {
       }
 
       const data = await res.json();
+
+      // console.log(data);
+
       pokemonData.value = data;
     } catch (error) {
       console.error(error);

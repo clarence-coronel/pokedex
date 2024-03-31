@@ -91,11 +91,16 @@ let limit = ref(20);
 const { pokemonList, nextExist, isLoading, getData, delayFinished } =
   usePokemonPreviewList();
 
-watch(counter, () => {
-  router.replace({
-    path: "/",
-    query: { page: counter.value, limit: limit.value },
-  });
+watch([counter, limit], () => {
+  if (counter.value && limit.value) {
+    router.replace({
+      path: "/",
+      query: { page: counter.value, limit: limit.value },
+    });
+  } else {
+    counter.value = 1;
+    limit.value = 20;
+  }
 });
 
 onMounted(async () => {
@@ -111,10 +116,12 @@ onMounted(async () => {
     });
   }
 
-  limit.value = Number(route.query.limit);
+  limit.value = parseInt(route.query.limit);
   offset.value =
-    Number(route.query.page) * Number(route.query.limit) - limit.value;
-  counter.value = Number(route.query.page);
+    parseInt(route.query.page) * parseInt(route.query.limit) - limit.value;
+
+  counter.value = parseInt(route.query.page);
+
   await getData(offset.value, limit.value);
 });
 
@@ -142,7 +149,7 @@ const valueUpdatedHandler = async (newVal) => {
 async function changePage(newVal) {
   if (newVal > 0) scrollToTop();
 
-  counter.value = newVal > 0 ? ++counter.value : --counter.value;
+  counter.value = newVal > 0 ? (counter.value += 1) : (counter.value -= 1);
 
   offset.value =
     newVal > 0 ? (offset.value += limit.value) : (offset.value -= limit.value);
