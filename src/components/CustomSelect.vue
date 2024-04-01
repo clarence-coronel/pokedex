@@ -10,8 +10,8 @@
       :class="{ 'rotate-180': selectOpen }"
       class="duration-500"
       xmlns="http://www.w3.org/2000/svg"
-      width="1rem"
-      height="1rem"
+      width="0.85rem"
+      height="0.85rem"
       viewBox="0 0 24 24"
     >
       <path
@@ -27,6 +27,7 @@
         :disabled="!selectOpen"
         class="hover:bg-neutral-200 duration-200 px-2 py-1 w-full text-left"
         v-for="(value, key) in options"
+        :key="key"
         @click.stop="() => updateValue(key, value)"
       >
         {{ key }}
