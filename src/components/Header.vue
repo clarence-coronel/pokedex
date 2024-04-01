@@ -5,9 +5,9 @@
     <div
       class="w-full max-w-[1400px] flex flex-nowrap gap-5 justify-around items-center sm:justify-between sm:flex-row flex-col"
     >
-      <router-link class="" to="/">
+      <button class="" @click="redirectHome">
         <img class="w-32" src="./../assets/logo.png" alt="Pokedex Logo" />
-      </router-link>
+      </button>
       <form
         @submit.prevent="redirect"
         class="w-full sm:w-fit bg-white border h-10 border-neutral-300 rounded-lg flex flex-nowrap gap-1 items-center justify-between"
@@ -41,10 +41,11 @@
 
 <script setup>
 import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 const pokemonName = ref("");
 const searchInputEl = ref(null);
 const router = useRouter();
+const route = useRoute();
 
 const redirect = () => {
   if (pokemonName.value == "") return;
@@ -52,6 +53,10 @@ const redirect = () => {
   pokemonName.value = "";
 
   searchInputEl.value.blur();
+};
+
+const redirectHome = () => {
+  if (route.path != "/") router.push("/?page=1&limit=20");
 };
 </script>
 
